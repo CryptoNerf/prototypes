@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>См-Смайл — прототип главной</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --porcelain:#F7F8F5; --paper:#FFFFFF; --ink:#1C2B2A; --muted:#5B6B69;
+  --jade:#0F6E63; --jade-dark:#0B5049; --mist:#E4EEEA; --line:#D6E0DC; --gold:#F2C14E;
+  --r-lg:22px; --r-md:14px; --r-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--porcelain);color:var(--ink);font-size:16px;line-height:1.55;padding-bottom:84px}
+a{color:inherit}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+h1{font-size:clamp(30px,6.4vw,54px);line-height:1.08;letter-spacing:-.02em;font-weight:700;max-width:14ch}
+h2{font-size:clamp(24px,4.4vw,36px);line-height:1.15;letter-spacing:-.015em;font-weight:700;margin-bottom:20px;max-width:22ch}
+.lead{color:var(--muted);font-size:18px;max-width:46ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:999px;font-family:inherit;font-weight:600;font-size:16px;line-height:1;text-decoration:none;border:0;cursor:pointer}
+.btn-main{background:var(--jade);color:#fff}
+.btn-main:hover{background:var(--jade-dark)}
+.btn-ghost{background:var(--paper);color:var(--ink);border:1.5px solid var(--line)}
+.ph{background:repeating-linear-gradient(135deg,#DCE6E2 0 12px,#E8EFEC 12px 24px);display:flex;align-items:flex-end;padding:12px;color:var(--muted);font-size:13px;border-radius:var(--r-md)}
+
+.proto-note{background:var(--ink);color:#DDE7E4;font-size:13px;text-align:center;padding:8px 16px}
+header{position:sticky;top:0;z-index:20;background:rgba(247,248,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.head{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:700;font-size:20px;letter-spacing:-.01em;text-decoration:none}
+.logo small{display:block;font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0}
+.head nav{display:none;gap:24px;font-size:15px}
+.head nav a{text-decoration:none;color:var(--muted)}
+.head .btn{min-height:42px;padding:0 18px;font-size:15px;display:none}
+
+.hero{padding-top:36px}
+.hero-grid{display:grid;gap:28px}
+.hero .lead{margin:18px 0 26px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-photo{aspect-ratio:4/3;border-radius:var(--r-lg)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px;color:var(--muted);font-size:14px}
+.facts span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--jade);margin-right:8px;vertical-align:middle}
+
+/* Problem picker — the key interactive block */
+.picker{background:var(--jade);color:#fff;border-radius:28px;padding:32px 22px;margin:0 -4px}
+.picker h2{color:#fff}
+.picker p{color:#CFE5E0;margin:-8px 0 20px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 16px;font-family:inherit;font-weight:500;font-size:15px;line-height:1.2;cursor:pointer}
+.chip[aria-pressed="true"]{background:#fff;color:var(--jade-dark);border-color:#fff}
+.answer{margin-top:20px;background:#fff;color:var(--ink);border-radius:var(--r-md);padding:18px;display:none}
+.answer.show{display:block}
+.answer b{display:block;font-size:18px;margin-bottom:4px}
+.answer a{color:var(--jade);font-weight:600}
+
+.services{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.svc{background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-md);padding:16px 14px;text-decoration:none;display:flex;flex-direction:column;gap:6px;min-height:118px;transition:border-color .2s,box-shadow .2s}
+.svc strong{font-size:16px;line-height:1.25}
+.svc span{font-size:13px;color:var(--muted);line-height:1.4}
+.svc em{margin-top:auto;font-style:normal;font-size:13px;color:var(--jade);font-weight:600}
+.svc.hl{border-color:var(--jade);box-shadow:0 0 0 3px var(--mist)}
+
+/* Before / after */
+.ba{position:relative;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;user-select:none;touch-action:pan-y}
+.ba .side{position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px;font-size:13px;font-weight:600}
+.ba .before{background:repeating-linear-gradient(135deg,#D9D3C4 0 12px,#E6E0D2 12px 24px);color:#6B6250}
+.ba .after{background:repeating-linear-gradient(135deg,#DCE6E2 0 12px,#EEF4F1 12px 24px);color:var(--jade-dark);justify-content:flex-end;clip-path:inset(0 0 0 50%)}
+.ba .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%)}
+.ba .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--jade);font-weight:700;box-shadow:0 2px 10px rgba(28,43,42,.18)}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize}
+.ba-cap{font-size:14px;color:var(--muted);margin-top:10px}
+
+.steps{list-style:none;display:grid;gap:12px;counter-reset:s}
+.steps li{background:var(--paper);border-radius:var(--r-md);padding:18px 18px 18px 64px;position:relative;counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--mist);color:var(--jade-dark);font-weight:700;display:grid;place-items:center}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:15px}
+
+.scroller{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:0 -20px;padding-left:20px;padding-right:20px}
+.doc{flex:0 0 72%;max-width:260px;scroll-snap-align:start}
+.doc .ph{aspect-ratio:3/4}
+.doc b{display:block;margin-top:10px}
+.doc span{font-size:14px;color:var(--muted)}
+
+.reviews{display:grid;gap:12px}
+.rev{background:var(--paper);border-radius:var(--r-md);padding:18px}
+.rev p{font-size:15px}
+.rev small{display:block;margin-top:10px;color:var(--muted)}
+.video{aspect-ratio:16/9;border-radius:var(--r-md);position:relative}
+.video::after{content:"▶";position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;background:#fff;color:var(--jade);display:grid;place-items:center;font-size:20px}
+
+.about{display:grid;gap:20px}
+.about .ph{aspect-ratio:16/10}
+.contacts{display:grid;gap:6px;margin-top:16px;font-size:15px}
+.contacts span{color:var(--muted)}
+
+.book{background:var(--ink);color:#fff;border-radius:28px;padding:32px 22px}
+.book h2{color:#fff}
+.book p{color:#B9C8C5;margin:-8px 0 20px}
+.form{display:grid;gap:10px}
+.form input,.form select{min-height:52px;border-radius:var(--r-sm);border:0;padding:0 16px;font-family:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.form small{color:#93A6A2;font-size:12px}
+.ok{display:none;background:var(--jade);border-radius:var(--r-md);padding:18px}
+.ok.show{display:block}
+
+footer{padding:32px 0;color:var(--muted);font-size:14px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.96);border-top:1px solid var(--line)}
+.bar .btn{min-height:48px;font-size:15px}
+
+@media (min-width:760px){
+  body{padding-bottom:0}
+  .bar{display:none}
+  .head nav{display:flex}
+  .head .btn{display:inline-flex}
+  section{padding:80px 0}
+  .hero-grid{grid-template-columns:1.05fr .95fr;align-items:center}
+  .picker,.book{padding:48px;margin:0}
+  .services{grid-template-columns:repeat(4,1fr);gap:14px}
+  .svc{min-height:150px;padding:20px}
+  .ba-row{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  .steps{grid-template-columns:repeat(4,1fr)}
+  .steps li{padding:64px 20px 20px}
+  .steps li::before{top:20px;left:20px}
+  .scroller{margin:0;padding:0 0 8px}
+  .doc{flex-basis:240px}
+  .reviews{grid-template-columns:1fr 1fr 1.3fr}
+  .about{grid-template-columns:1fr 1fr;align-items:center}
+  .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="proto-note">Прототип новой главной. Фото, тексты и контакты заменим на реальные материалы клиники.</div>
+
+<header>
+  <div class="wrap head">
+    <a class="logo" href="#">См-Смайл<small>Стоматология в Серпухове</small></a>
+    <nav aria-label="Главное меню">
+      <a href="#services">Услуги</a><a href="#doctors">Врачи</a><a href="#reviews">Отзывы</a><a href="#contacts">Контакты</a>
+    </nav>
+    <a class="btn btn-main" href="#book">Записаться</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Лечим, восстанавливаем и возвращаем улыбку</h1>
+      <p class="lead">Лечение, имплантация, протезирование и эстетика в одной клинике: от первой консультации до готового результата.</p>
+      <div class="hero-actions">
+        <a class="btn btn-main" href="#book">Записаться на консультацию</a>
+        <a class="btn btn-ghost" href="tel:+70000000000">Позвонить</a>
+      </div>
+      <div class="facts"><span>Приём взрослых и детей</span><span>Комплексное восстановление</span><span>Серпухов</span></div>
+    </div>
+    <div class="ph hero-photo">Фото клиники или врача за работой</div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="picker">
+      <h2>С какой проблемой вы пришли?</h2>
+      <p>Выберите — подскажем, какое направление вам нужно.</p>
+      <div class="chips" role="group" aria-label="Проблемы">
+        <button class="chip" data-svc="treat" data-t="Болит зуб или выпала пломба" data-d="Начнём с осмотра и снимка, чтобы понять причину боли, и вылечим зуб в тот же визит, если это возможно.">Болит зуб</button>
+        <button class="chip" data-svc="hyg" data-t="Кровоточат дёсны или есть налёт" data-d="Профессиональная гигиена убирает налёт и камень, после неё врач оценит состояние дёсен.">Кровоточат дёсны</button>
+        <button class="chip" data-svc="impl" data-t="Нет одного или нескольких зубов" data-d="Имплантация восстанавливает зуб вместе с корнем, соседние зубы при этом не нужно обтачивать.">Нет зуба</button>
+        <button class="chip" data-svc="ortho" data-t="Неровные зубы или неправильный прикус" data-d="Ортодонт подберёт брекеты или элайнеры, если они подходят вам по показаниям.">Кривые зубы</button>
+        <button class="chip" data-svc="aes" data-t="Не нравится цвет или форма зубов" data-d="Отбеливание, виниры или художественная реставрация — врач покажет варианты на консультации.">Не нравится улыбка</button>
+        <button class="chip" data-svc="ext" data-t="Зуб нужно удалить" data-d="Удаляем под анестезией, в том числе зубы мудрости, и сразу обсуждаем, чем восстановить зуб.">Нужно удалить</button>
+        <button class="chip" data-svc="kids" data-t="Лечение для ребёнка" data-d="Детский врач проведёт первый приём спокойно, в формате знакомства, без спешки.">Для ребёнка</button>
+        <button class="chip" data-svc="prost" data-t="Разрушены несколько зубов" data-d="Комплексное восстановление: составим план лечения и протезирования и проведём по нему шаг за шагом.">Разрушены зубы</button>
+      </div>
+      <div class="answer" id="answer" aria-live="polite"><b></b><span></span><br><a href="#services">Смотреть направление ниже</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" style="padding-top:0">
+  <div class="wrap">
+    <h2>Направления</h2>
+    <div class="services">
+      <a class="svc" id="svc-treat" href="#"><strong>Лечение зубов</strong><span>Кариес, пульпит, пломбы</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-hyg" href="#"><strong>Гигиена</strong><span>Чистка, удаление камня</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-kids" href="#"><strong>Детская стоматология</strong><span>Лечение и профилактика</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-ortho" href="#"><strong>Ортодонтия</strong><span>Брекеты, элайнеры</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-ext" href="#"><strong>Удаление</strong><span>В том числе зубы мудрости</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-impl" href="#"><strong>Имплантация</strong><span>Один зуб или вся челюсть</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-prost" href="#"><strong>Протезирование</strong><span>Коронки, мосты, протезы</span><em>Подробнее</em></a>
+      <a class="svc" id="svc-aes" href="#"><strong>Эстетика</strong><span>Виниры, отбеливание</span><em>Подробнее</em></a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap ba-row">
+    <div>
+      <div class="ba" id="ba">
+        <div class="side before">До</div>
+        <div class="side after" id="after">После</div>
+        <div class="handle" id="handle"></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Сравнить до и после">
+      </div>
+      <p class="ba-cap">Потяните ползунок. Здесь будут реальные работы клиники.</p>
+    </div>
+    <div>
+      <h2>Результаты наших пациентов</h2>
+      <p class="lead">Каждая работа подписана: что было, что сделали и сколько визитов это заняло. Новые случаи добавляются из админки.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Комплексное восстановление</h2>
+    <p class="lead" style="margin:-8px 0 24px">Когда проблем несколько, лечим не по одному зубу, а по единому плану.</p>
+    <ol class="steps">
+      <li><b>Диагностика</b><span>Осмотр, снимки, фото улыбки</span></li>
+      <li><b>План лечения</b><span>Этапы, сроки и стоимость заранее</span></li>
+      <li><b>Лечение и имплантация</b><span>Санация, удаление, импланты</span></li>
+      <li><b>Протезирование</b><span>Коронки и финальная эстетика</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="doctors" style="padding-top:0">
+  <div class="wrap">
+    <h2>Врачи</h2>
+    <div class="scroller">
+      <div class="doc"><div class="ph">Фото врача</div><b>Имя врача</b><span>Стоматолог-терапевт</span></div>
+      <div class="doc"><div class="ph">Фото врача</div><b>Имя врача</b><span>Хирург-имплантолог</span></div>
+      <div class="doc"><div class="ph">Фото врача</div><b>Имя врача</b><span>Ортопед</span></div>
+      <div class="doc"><div class="ph">Фото врача</div><b>Имя врача</b><span>Детский стоматолог</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" style="padding-top:0">
+  <div class="wrap">
+    <h2>Отзывы</h2>
+    <div class="reviews">
+      <div class="rev"><p>Здесь будет реальный отзыв пациента с площадок, где клиника собирает отзывы.</p><small>Имя, услуга</small></div>
+      <div class="rev"><p>Второй отзыв. Удобно показывать по два текстовых и одно видео, остальные — по кнопке.</p><small>Имя, услуга</small></div>
+      <div class="ph video">Видеоотзыв</div>
+    </div>
+  </div>
+</section>
+
+<section id="contacts" style="padding-top:0">
+  <div class="wrap about">
+    <div>
+      <h2>О клинике</h2>
+      <p class="lead">Короткий рассказ о клинике: сколько лет работаете, какое оборудование, чем отличаетесь.</p>
+      <div class="contacts">
+        <div><span>Адрес:</span> Серпухов, адрес клиники</div>
+        <div><span>Часы работы:</span> по графику клиники</div>
+        <div><span>Телефон:</span> <a href="tel:+70000000000">номер клиники</a></div>
+      </div>
+    </div>
+    <div class="ph">Карта или фото входа</div>
+  </div>
+</section>
+
+<section id="book" style="padding-top:0">
+  <div class="wrap">
+    <div class="book book-grid">
+      <div>
+        <h2>Запишитесь на консультацию</h2>
+        <p>Администратор перезвонит, подберёт удобное время и ответит на вопросы.</p>
+      </div>
+      <div>
+        <form class="form" id="form">
+          <input name="name" placeholder="Ваше имя" autocomplete="name" required>
+          <input name="phone" type="tel" placeholder="Телефон" autocomplete="tel" required>
+          <select name="svc" aria-label="Направление">
+            <option>Пока не знаю, нужна консультация</option>
+            <option>Лечение зубов</option><option>Гигиена</option><option>Детская стоматология</option><option>Ортодонтия</option>
+            <option>Удаление</option><option>Имплантация</option><option>Протезирование</option><option>Эстетика</option>
+          </select>
+          <button class="btn btn-main" type="submit">Записаться</button>
+          <small>Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</small>
+        </form>
+        <div class="ok" id="ok" role="status"><b>Заявка отправлена</b><br>Администратор перезвонит вам в рабочее время.</div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">См-Смайл, Серпухов. Прототип главной страницы.</div></footer>
+
+<div class="bar">
+  <a class="btn btn-ghost" href="tel:+70000000000">Позвонить</a>
+  <a class="btn btn-main" href="#book">Записаться</a>
+</div>
+
+<script>
+(function(){
+  var chips=document.querySelectorAll('.chip'), ans=document.getElementById('answer');
+  chips.forEach(function(c){
+    c.setAttribute('aria-pressed','false');
+    c.addEventListener('click',function(){
+      chips.forEach(function(x){x.setAttribute('aria-pressed','false')});
+      c.setAttribute('aria-pressed','true');
+      ans.querySelector('b').textContent=c.dataset.t;
+      ans.querySelector('span').textContent=c.dataset.d;
+      ans.querySelector('a').href='#svc-'+c.dataset.svc;
+      ans.classList.add('show');
+      document.querySelectorAll('.svc').forEach(function(s){s.classList.remove('hl')});
+      document.getElementById('svc-'+c.dataset.svc).classList.add('hl');
+    });
+  });
+  var r=document.querySelector('#ba input'), a=document.getElementById('after'), h=document.getElementById('handle');
+  r.addEventListener('input',function(){a.style.clipPath='inset(0 0 0 '+r.value+'%)';h.style.left=r.value+'%'});
+  document.getElementById('form').addEventListener('submit',function(e){
+    e.preventDefault();this.style.display='none';document.getElementById('ok').classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
