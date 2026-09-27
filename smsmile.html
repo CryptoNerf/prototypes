@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>См-Смайл — прототип главной</title>
+<title>SM Smile — прототип главной</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --porcelain:#F7F8F5; --paper:#FFFFFF; --ink:#1C2B2A; --muted:#5B6B69;
-  --jade:#0F6E63; --jade-dark:#0B5049; --mist:#E4EEEA; --line:#D6E0DC; --gold:#F2C14E;
+  --porcelain:#F5F7FA; --paper:#FFFFFF; --ink:#1F2A33; --muted:#5A6772;
+  --jade:#006CBB; --jade-dark:#00548F; --mist:#E2EFFA; --line:#D6E1EA; --gold:#F2C14E;
   --r-lg:22px; --r-md:14px; --r-sm:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--porcelain);color:var(--ink);font-size:16px;line-height:1.55;padding-bottom:84px}
+body{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--porcelain);color:var(--ink);font-size:16px;line-height:1.55;padding-bottom:84px}
 a{color:inherit}
 img{max-width:100%}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
@@ -25,13 +25,13 @@ h1{font-size:clamp(30px,6.4vw,54px);line-height:1.08;letter-spacing:-.02em;font-
 h2{font-size:clamp(24px,4.4vw,36px);line-height:1.15;letter-spacing:-.015em;font-weight:700;margin-bottom:20px;max-width:22ch}
 .lead{color:var(--muted);font-size:18px;max-width:46ch}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:999px;font-family:inherit;font-weight:600;font-size:16px;line-height:1;text-decoration:none;border:0;cursor:pointer}
-.btn-main{background:var(--jade);color:#fff}
-.btn-main:hover{background:var(--jade-dark)}
+.btn-main{background:linear-gradient(94deg,#006CBB 0%,#76C5FF 100%);color:#fff}
+.btn-main:hover{background:linear-gradient(94deg,#00548F 0%,#4FAEF5 100%)}
 .btn-ghost{background:var(--paper);color:var(--ink);border:1.5px solid var(--line)}
-.ph{background:repeating-linear-gradient(135deg,#DCE6E2 0 12px,#E8EFEC 12px 24px);display:flex;align-items:flex-end;padding:12px;color:var(--muted);font-size:13px;border-radius:var(--r-md)}
+.ph{background:repeating-linear-gradient(135deg,#DDE6EE 0 12px,#EAF0F5 12px 24px);display:flex;align-items:flex-end;padding:12px;color:var(--muted);font-size:13px;border-radius:var(--r-md)}
 
 .proto-note{background:var(--ink);color:#DDE7E4;font-size:13px;text-align:center;padding:8px 16px}
-header{position:sticky;top:0;z-index:20;background:rgba(247,248,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+header{position:sticky;top:0;z-index:20;background:rgba(245,247,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
 .head{display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{font-weight:700;font-size:20px;letter-spacing:-.01em;text-decoration:none}
 .logo small{display:block;font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0}
@@ -48,9 +48,9 @@ header{position:sticky;top:0;z-index:20;background:rgba(247,248,245,.92);backdro
 .facts span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--jade);margin-right:8px;vertical-align:middle}
 
 /* Problem picker — the key interactive block */
-.picker{background:var(--jade);color:#fff;border-radius:28px;padding:32px 22px;margin:0 -4px}
+.picker{background:linear-gradient(135deg,#00548F 0%,#006CBB 55%,#2E93DE 100%);color:#fff;border-radius:28px;padding:32px 22px;margin:0 -4px}
 .picker h2{color:#fff}
-.picker p{color:#CFE5E0;margin:-8px 0 20px}
+.picker p{color:#D3E8F8;margin:-8px 0 20px}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 16px;font-family:inherit;font-weight:500;font-size:15px;line-height:1.2;cursor:pointer}
 .chip[aria-pressed="true"]{background:#fff;color:var(--jade-dark);border-color:#fff}
@@ -70,7 +70,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(247,248,245,.92);backdro
 .ba{position:relative;aspect-ratio:4/3;border-radius:var(--r-lg);overflow:hidden;user-select:none;touch-action:pan-y}
 .ba .side{position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px;font-size:13px;font-weight:600}
 .ba .before{background:repeating-linear-gradient(135deg,#D9D3C4 0 12px,#E6E0D2 12px 24px);color:#6B6250}
-.ba .after{background:repeating-linear-gradient(135deg,#DCE6E2 0 12px,#EEF4F1 12px 24px);color:var(--jade-dark);justify-content:flex-end;clip-path:inset(0 0 0 50%)}
+.ba .after{background:repeating-linear-gradient(135deg,#DDE9F4 0 12px,#EEF5FB 12px 24px);color:var(--jade-dark);justify-content:flex-end;clip-path:inset(0 0 0 50%)}
 .ba .handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%)}
 .ba .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--jade);font-weight:700;box-shadow:0 2px 10px rgba(28,43,42,.18)}
 .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize}
@@ -139,11 +139,11 @@ footer{padding:32px 0;color:var(--muted);font-size:14px}
 </head>
 <body>
 
-<div class="proto-note">Прототип новой главной. Фото, тексты и контакты заменим на реальные материалы клиники.</div>
+<div class="proto-note">Прототип новой главной в фирменных цветах SM Smile. Фото и тексты заменим на реальные материалы клиники.</div>
 
 <header>
   <div class="wrap head">
-    <a class="logo" href="#">См-Смайл<small>Стоматология в Серпухове</small></a>
+    <a class="logo" href="#">SM Smile<small>Авторская клиника эстетической стоматологии</small></a>
     <nav aria-label="Главное меню">
       <a href="#services">Услуги</a><a href="#doctors">Врачи</a><a href="#reviews">Отзывы</a><a href="#contacts">Контакты</a>
     </nav>
@@ -155,10 +155,10 @@ footer{padding:32px 0;color:var(--muted);font-size:14px}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <h1>Лечим, восстанавливаем и возвращаем улыбку</h1>
-      <p class="lead">Лечение, имплантация, протезирование и эстетика в одной клинике: от первой консультации до готового результата.</p>
+      <h1>Эстетическая стоматология и имплантация в Серпухове</h1>
+      <p class="lead">Лечение, имплантация, протезирование и эстетика в одной клинике. Первая консультация главного врача — бесплатно.</p>
       <div class="hero-actions">
-        <a class="btn btn-main" href="#book">Записаться на консультацию</a>
+        <a class="btn btn-main" href="#book">Бесплатная консультация</a>
         <a class="btn btn-ghost" href="tel:+70000000000">Позвонить</a>
       </div>
       <div class="facts"><span>Приём взрослых и детей</span><span>Комплексное восстановление</span><span>Серпухов</span></div>
@@ -298,7 +298,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px}
 </section>
 </main>
 
-<footer><div class="wrap">См-Смайл, Серпухов. Прототип главной страницы.</div></footer>
+<footer><div class="wrap">SM Smile, Серпухов. Прототип главной страницы.</div></footer>
 
 <div class="bar">
   <a class="btn btn-ghost" href="tel:+70000000000">Позвонить</a>
