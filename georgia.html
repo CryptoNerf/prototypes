@@ -37,7 +37,7 @@ button{font-family:inherit}
 .meta span{font-size:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 10px}
 section{padding:28px 16px 8px}
 .lead{color:var(--muted);margin:-6px 0 16px;font-size:15px}
-.tabs{display:flex;gap:6px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 4px;scroll-snap-type:x proximity}
+.tabs{position:relative;display:flex;gap:6px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 4px;scroll-snap-type:x proximity}
 .tab{flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:8px 12px;text-align:left;cursor:pointer;color:var(--ink);min-width:74px}
 .tab b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;line-height:1}
 .tab small{font-size:12px;color:var(--muted)}
@@ -104,7 +104,7 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
 
 <section id="program">
   <h2>Программа по дням</h2>
-  <p class="lead">Выберите день — вся программа помещается в один экран, без бесконечной ленты.</p>
+  <p class="lead">Выберите день, чтобы посмотреть маршрут и план.</p>
   <div class="tabs" role="tablist" id="tabs"></div>
   <article class="card" id="card" role="tabpanel" aria-live="polite"></article>
 </section>
@@ -178,7 +178,7 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
   function show(i){
     cur=i;var d=days[i],c=sky[i];
     [].forEach.call(tabs.children,function(t,k){t.setAttribute('aria-selected',k===i?'true':'false')});
-    tabs.children[i].scrollIntoView({block:'nearest',inline:'center'});
+    var ch=tabs.children[i];tabs.scrollLeft=ch.offsetLeft-(tabs.clientWidth-ch.offsetWidth)/2;
     var h='<div class="photos">';
     d.ph.forEach(function(p){h+='<div class="photo" style="--a:'+c[0]+';--b:'+c[1]+';--c:'+c[2]+';--d:'+c[3]+'"><span>Фото: '+p+'</span></div>'});
     h+='</div><p class="route">'+d.r+'</p><h3>День '+(i+1)+'. '+d.t+'</h3><ol class="plan">';
