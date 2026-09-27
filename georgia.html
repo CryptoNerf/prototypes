@@ -84,6 +84,19 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
 .sticky div{flex:1;font-size:13px;color:var(--muted);line-height:1.2}
 .sticky b{display:block;color:var(--ink);font-size:17px}
 .sticky .btn{flex:1.3;min-height:46px}
+.scrim{position:fixed;inset:0;background:rgba(33,30,28,.45);z-index:40}
+.sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,430px);z-index:50;background:var(--paper);border-radius:22px 22px 0 0;padding:10px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.sheet[hidden],.scrim[hidden],.sheet [hidden]{display:none}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
+.sheet form{display:grid;gap:8px}
+.sheet input,.sheet select{min-height:48px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.cnt{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.cnt select{min-height:40px}
+.sheet small{color:var(--muted);font-size:12px}
+.sheet-date{color:var(--muted);font-size:14px;margin:-8px 0 12px}
+.close{margin-top:10px;width:100%;background:none;border:0;color:var(--muted);font-size:14px;padding:8px;cursor:pointer}
+.done{background:var(--stone);border-radius:14px;padding:14px}
+.done p{font-size:15px;color:var(--muted);margin-top:4px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -91,14 +104,14 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
 <div class="app">
 <div class="note">Мобильный макет: день программы и стоимость. Тексты, даты и цены — примерные, подставлю ваши.</div>
 <div class="top">
-  <div class="bar1"><div class="brand">Авторский тур<small>Грузия, 8 дней</small></div><a class="ask" href="#price">Задать вопрос</a></div>
+  <div class="bar1"><div class="brand">Авторский тур<small>Грузия, 8 дней</small></div><a class="ask" href="#" data-open="ask">Задать вопрос</a></div>
   <nav class="anchors" aria-label="Разделы"><a href="#program">Программа</a><a href="#stay">Проживание</a><a href="#price">Стоимость</a><a href="#booking">Бронирование</a><a href="#reviews">Отзывы</a></nav>
 </div>
 <header class="hero">
   <div class="hero-in">
     <p class="kicker">Авторский тур в маленькой группе</p>
     <h1>Грузия за 8 дней: от Тбилиси до Казбека</h1>
-    <div class="meta"><span>8 дней, 7 ночей</span><span>до 10 человек</span><span>октябрь–ноябрь</span></div>
+    <div class="meta"><span>8 дней, 7 ночей</span><span>до 10 человек</span><span>октябрь–ноябрь</span><span>от 95 000 ₽</span></div>
   </div>
 </header>
 
@@ -142,8 +155,8 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
       </ul>
     </div>
     <div class="btns">
-      <a class="btn btn-main" href="#booking">Забронировать</a>
-      <a class="btn btn-ghost" href="#price">Задать вопрос</a>
+      <button class="btn btn-main" type="button" data-open="book">Забронировать</button>
+      <button class="btn btn-ghost" type="button" data-open="ask">Задать вопрос</button>
     </div>
   </div>
   <details id="booking"><summary>Условия бронирования</summary><p>Предоплата 30% закрепляет место. Остаток — за 14 дней до начала тура. При отмене позже этого срока предоплата не возвращается, но её можно перенести на другие даты.</p></details>
@@ -152,9 +165,21 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
 
 <div class="soon" id="reviews">Отзывы и ссылки на страницы компании — соберу после согласования макета.</div>
 
-<div class="sticky"><div><b>95 000 ₽</b>за человека</div><a class="btn btn-main" href="#price">Забронировать</a></div>
+<div class="sticky"><div><b>95 000 ₽</b><span id="sdate">12–19 октября</span></div><button class="btn btn-main" type="button" data-open="book">Забронировать</button></div>
 </div>
 
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet-book" role="dialog" aria-modal="true" aria-labelledby="bt" hidden>
+  <div class="grab"></div><h3 id="bt">Заявка на тур</h3><p class="sheet-date">Даты: <b id="bdate"></b></p>
+  <form id="bform"><input placeholder="Ваше имя" autocomplete="name" required><input type="tel" placeholder="Телефон или Telegram" required><label class="cnt">Сколько человек <select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label><button class="btn btn-main" type="submit">Отправить заявку</button><small>Мы свяжемся с вами, чтобы подтвердить места и рассказать про оплату.</small></form>
+  <div class="done" hidden><b>Заявка отправлена</b><p>Мы свяжемся с вами, чтобы подтвердить места.</p></div>
+  <button class="close" type="button" data-close>Закрыть</button>
+</div>
+<div class="sheet" id="sheet-ask" role="dialog" aria-modal="true" aria-labelledby="at" hidden>
+  <div class="grab"></div><h3 id="at">Задать вопрос</h3><p class="sheet-date">Ответим в мессенджере или перезвоним</p>
+  <div class="btns"><a class="btn btn-ghost" href="#">Написать в Telegram</a><a class="btn btn-ghost" href="#">Позвонить</a></div>
+  <button class="close" type="button" data-close>Закрыть</button>
+</div>
 <script>
 (function(){
   var short=['Тбилиси','Мцхета','Казбеги','Трусо','Сигнахи','Телави','Боржоми','Вылет'];
@@ -191,6 +216,16 @@ details p{font-size:15px;color:var(--muted);margin-top:8px}
     pv.disabled=i===0;nx.disabled=i===days.length-1;
     pv.onclick=function(){show(cur-1)};nx.onclick=function(){show(cur+1)};
   }
+  function dateText(){var r=document.querySelector('input[name=d]:checked');return r?r.parentNode.textContent.trim():'';}
+  var scrim=document.getElementById('scrim');
+  function openSheet(id){if(id==='book'){document.getElementById('bdate').textContent=dateText();}scrim.hidden=false;document.getElementById('sheet-'+id).hidden=false;}
+  function closeAll(){scrim.hidden=true;[].forEach.call(document.querySelectorAll('.sheet'),function(x){x.hidden=true});}
+  [].forEach.call(document.querySelectorAll('[data-open]'),function(b){b.addEventListener('click',function(e){e.preventDefault();openSheet(b.getAttribute('data-open'))})});
+  [].forEach.call(document.querySelectorAll('[data-close]'),function(b){b.addEventListener('click',closeAll)});
+  scrim.addEventListener('click',closeAll);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll()});
+  [].forEach.call(document.querySelectorAll('input[name=d]'),function(r){r.addEventListener('change',function(){document.getElementById('sdate').textContent=dateText()})});
+  document.getElementById('bform').addEventListener('submit',function(e){e.preventDefault();this.hidden=true;this.nextElementSibling.hidden=false;});
   show(cur);
 })();
 </script>
