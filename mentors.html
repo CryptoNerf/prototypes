@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Менторская программа — прототип</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F4F1;--card:#FFFFFF;--ink:#1B1D1F;--muted:#62686E;--line:#DFE2DC;--acc:#2F5D50;--acc-d:#234A3F;--acc-soft:#E3EEE9;--warn:#B8741A;--warn-soft:#FBEFD9;--done:#6E737A;--done-soft:#ECEDEE}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+button,input,select,textarea{font-family:inherit;font-size:15px;color:inherit}
+:focus-visible{outline:3px solid #E7A33E;outline-offset:2px}
+.note{background:var(--ink);color:#DCE3DF;font-size:12px;text-align:center;padding:7px 14px}
+.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.top-in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:16px}
+.logo small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.seg{display:flex;background:var(--bg);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.tabs{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;gap:18px}
+.tabs button{border:0;background:none;padding:10px 0;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;font-weight:500}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--acc)}
+main{max-width:1080px;margin:0 auto;padding:16px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+h1{font-size:22px;line-height:1.2}
+h2{font-size:18px;margin-bottom:10px}
+.sub{color:var(--muted);font-size:13px}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer;background:var(--acc);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--acc-d)}
+.btn-ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--bg)}
+.btn-sm{padding:7px 10px;font-size:13px}
+.layout{display:grid;gap:16px}
+.list{display:grid;gap:8px;align-content:start}
+.pair{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;width:100%}
+.pair[aria-current="true"]{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc-soft)}
+.pair-names{font-weight:600}
+.pair-names span{color:var(--muted);font-weight:400;font-size:13px;display:inline-block;min-width:92px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:6px;font-size:13px;color:var(--muted)}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px}
+.chip-active{background:var(--acc-soft);color:var(--acc)}
+.chip-done{background:var(--done-soft);color:var(--done)}
+.chip-warn{background:var(--warn-soft);color:var(--warn)}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.back{display:inline-block;border:0;background:none;color:var(--acc);font-weight:600;cursor:pointer;margin-bottom:10px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.who div{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:13px}
+.who b{display:block;font-size:14px}
+.session{border-top:1px solid var(--line);padding:12px 0}
+.session:first-of-type{border-top:0}
+.s-date{font-weight:600}
+.s-link{font-size:13px;word-break:break-all;color:var(--acc)}
+.s-nolink{font-size:13px;color:var(--warn)}
+.s-note{font-size:14px;margin-top:6px}
+.s-note span{color:var(--muted)}
+.fb{background:var(--bg);border-radius:10px;padding:10px;margin-top:8px;font-size:14px}
+.fb dt{font-size:12px;color:var(--muted);margin-top:4px}
+.fb dt:first-child{margin-top:0}
+.dots{display:inline-flex;gap:3px;vertical-align:middle}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--acc)}
+.s-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.private{font-size:12px;color:var(--muted);margin-top:10px}
+.people{display:grid;gap:8px}
+.person{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.person p{font-size:14px}
+.person p span{color:var(--muted)}
+.form{display:grid;gap:10px;max-width:560px}
+.form label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.form input,.form select,.form textarea{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);min-height:44px}
+.form textarea{min-height:76px;resize:vertical}
+.scale{display:flex;gap:6px}
+.scale button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 0;cursor:pointer;font-weight:600}
+.scale button[aria-pressed="true"]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.empty{color:var(--muted);font-size:14px;padding:8px 0}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:60;display:none}
+.scrim{position:fixed;inset:0;background:rgba(27,29,31,.4);z-index:40}
+.sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,520px);z-index:50;background:var(--card);border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+[hidden]{display:none!important}
+.err{color:#B3261E;font-size:13px}
+@media (min-width:900px){
+  .layout{grid-template-columns:380px 1fr;align-items:start}
+  .back{display:none}
+  .people{grid-template-columns:1fr 1fr}
+  .sheet{bottom:auto;top:50%;transform:translate(-50%,-50%);border-radius:18px}
+}
+@media (max-width:899px){
+  .layout.detail-open .list{display:none}
+  .layout:not(.detail-open) .detail{display:none}
+}
+</style>
+</head>
+<body>
+<div class="note">Прототип MVP по вашему ТЗ. Данные тестовые, переключите роль вверху, чтобы увидеть разграничение доступа.</div>
+<header class="top">
+  <div class="top-in">
+    <div class="logo">Менторская программа<small id="whoami"></small></div>
+    <div class="seg" role="group" aria-label="Роль">
+      <button type="button" data-role="admin">Администратор</button>
+      <button type="button" data-role="user">Участник: Мария</button>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+</header>
+<main id="main"></main>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var TODAY=new Date('2026-09-28T12:00');
+  var ME=1;
+  var people=[
+    {id:1,n:'Мария Соколова',g:'Вырасти до тимлида',e:'5 лет в продукте',i:'Менеджмент, найм',t:'Вт и Чт вечером'},
+    {id:2,n:'Алексей Ким',g:'Делиться опытом управления',e:'10 лет в разработке, CTO',i:'Архитектура, лидерство',t:'Пн и Ср утром'},
+    {id:3,n:'Иван Петров',g:'Перейти в продакт-менеджмент',e:'2 года в аналитике',i:'Продукт, метрики',t:'Пт днём'},
+    {id:4,n:'Дарья Лебедева',g:'Прокачать исследования',e:'3 года в UX',i:'Интервью, прототипы',t:'Ср вечером'},
+    {id:5,n:'Ольга Смирнова',g:'Менторить дизайнеров',e:'8 лет в дизайне, арт-директор',i:'UX, портфолио',t:'Чт днём'},
+    {id:6,n:'Никита Орлов',g:'Выйти на уровень senior',e:'4 года во фронтенде',i:'React, архитектура',t:'Вт утром'},
+    {id:7,n:'Сергей Волков',g:'Помочь новичкам в продажах',e:'7 лет в B2B-продажах',i:'Переговоры',t:'Пн вечером'},
+    {id:8,n:'Анна Фролова',g:'Разобраться в B2B-продажах',e:'1 год в маркетинге',i:'Продажи, коммуникации',t:'Пт утром'}
+  ];
+  var pairs=[
+    {id:1,m:2,e:1,st:'active',s:[
+      {d:'2026-09-03T19:00',l:'https://meet.google.com/xxx-xxxx-xxx',fb:[{by:1,a:'Разобрали, как проводить 1:1 с командой',n:'Провести два 1:1 по новому шаблону',p:3}]},
+      {d:'2026-09-17T19:00',l:'https://meet.google.com/xxx-xxxx-xxx',fb:[{by:1,a:'Обсудили делегирование задач',n:'Передать отчётность коллеге',p:4},{by:2,a:'Делегирование, страх потерять контроль',n:'Через неделю разобрать, что получилось',p:4}]},
+      {d:'2026-10-01T19:00',l:'',nt:'Разобрать, как прошло делегирование отчётности',fb:[]}]},
+    {id:2,m:1,e:3,st:'active',s:[
+      {d:'2026-09-02T13:00',l:'https://zoom.us/j/000000000',fb:[{by:3,a:'Как устроена работа продакта',n:'Разобрать один кейс по JTBD',p:2}]}]},
+    {id:3,m:5,e:4,st:'active',s:[]},
+    {id:4,m:7,e:8,st:'done',s:[
+      {d:'2026-08-10T18:00',l:'https://meet.google.com/xxx-xxxx-xxx',fb:[{by:8,a:'Этапы B2B-сделки',n:'Составить карту клиента',p:4}]},
+      {d:'2026-08-24T18:00',l:'https://meet.google.com/xxx-xxxx-xxx',fb:[{by:8,a:'Разбор реального звонка',n:'Самостоятельно провести звонок',p:5}]}]}
+  ];
+  var st={role:'admin',tab:'pairs',open:null};
+  var $=function(id){return document.getElementById(id)};
+  function P(id){for(var i=0;i<people.length;i++)if(people[i].id===id)return people[i]}
+  function pairById(id){for(var i=0;i<pairs.length;i++)if(pairs[i].id===id)return pairs[i]}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function fmt(d){var x=new Date(d);return x.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+', '+x.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}
+  function short(d){return new Date(d).toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}
+  function past(p){return p.s.filter(function(x){return new Date(x.d)<=TODAY})}
+  function next(p){var f=p.s.filter(function(x){return new Date(x.d)>TODAY});return f.length?f[0]:null}
+  function lastP(p){var v=null;p.s.forEach(function(x){x.fb.forEach(function(f){if(f.by===p.e)v=f.p})});return v}
+  function flag(p){
+    if(p.st!=='active')return '';
+    var ps=past(p);
+    if(!ps.length&&!next(p))return 'Ещё не было встреч';
+    var last=ps.length?new Date(ps[ps.length-1].d):null;
+    if(last&&(TODAY-last)/864e5>21&&!next(p))return 'Нет встреч больше 3 недель';
+    return '';
+  }
+  function dots(v){var h='<span class="dots" aria-label="'+v+' из 5">';for(var i=1;i<=5;i++)h+='<i class="'+(i<=v?'on':'')+'"></i>';return h+'</span>'}
+  function toast(t){var el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(function(){el.style.display='none'},2200)}
+  function visiblePairs(){return st.role==='admin'?pairs:pairs.filter(function(p){return p.m===ME||p.e===ME})}
+
+  function renderTop(){
+    [].forEach.call(document.querySelectorAll('[data-role]'),function(b){b.setAttribute('aria-pressed',b.dataset.role===st.role?'true':'false')});
+    $('whoami').textContent=st.role==='admin'?'Вы вошли как администратор':'Вы вошли как Мария Соколова';
+    var t=st.role==='admin'?[['pairs','Пары'],['people','Участники']]:[['pairs','Мои пары'],['profile','Моя анкета']];
+    $('tabs').innerHTML=t.map(function(x){return '<button type="button" role="tab" data-tab="'+x[0]+'" aria-selected="'+(st.tab===x[0])+'">'+x[1]+'</button>'}).join('');
+  }
+
+  function pairCard(p){
+    var f=flag(p), ps=past(p), lp=lastP(p), nx=next(p);
+    var names=st.role==='user'?(p.m===ME?'<span>Ваш менти</span>'+esc(P(p.e).n):'<span>Ваш ментор</span>'+esc(P(p.m).n)):'<span>Ментор</span>'+esc(P(p.m).n)+'<br><span>Менти</span>'+esc(P(p.e).n);
+    return '<button type="button" class="pair" data-pair="'+p.id+'" aria-current="'+(st.open===p.id)+'">'+
+      '<div class="row"><div class="pair-names">'+names+'</div>'+
+      '<span class="chip '+(p.st==='active'?'chip-active':'chip-done')+'">'+(p.st==='active'?'Активна':'Завершена')+'</span></div>'+
+      '<div class="meta"><span>Встреч: '+ps.length+'</span><span>'+(nx?'Следующая: '+short(nx.d):(ps.length?'Последняя: '+short(ps[ps.length-1].d):'Встреч не было'))+'</span>'+(lp?'<span>Прогресс '+dots(lp)+'</span>':'')+'</div>'+
+      (f?'<div style="margin-top:8px"><span class="chip chip-warn">'+f+'</span></div>':'')+
+    '</button>';
+  }
+
+  function detail(p){
+    var canEdit=st.role==='admin'||p.m===ME||p.e===ME;
+    var h='<button type="button" class="back" data-back>← К списку</button><div class="panel">'+
+      '<div class="row"><h2>Пара #'+p.id+'</h2><span class="chip '+(p.st==='active'?'chip-active':'chip-done')+'">'+(p.st==='active'?'Активна':'Завершена')+'</span></div>'+
+      '<div class="who"><div>Ментор<b>'+esc(P(p.m).n)+(st.role==='user'&&p.m===ME?' (вы)':'')+'</b></div><div>Менти<b>'+esc(P(p.e).n)+(st.role==='user'&&p.e===ME?' (вы)':'')+'</b></div></div>'+
+      '<div class="row" style="align-items:center;margin:14px 0 4px"><b>Сессии</b>'+(p.st==='active'&&canEdit?'<button type="button" class="btn btn-sm" data-add-session="'+p.id+'">Добавить сессию</button>':'')+'</div>';
+    if(!p.s.length)h+='<p class="empty">Сессий пока нет. Назначьте первую встречу.</p>';
+    p.s.forEach(function(s,idx){
+      var isPast=new Date(s.d)<=TODAY;
+      h+='<div class="session"><div class="row"><span class="s-date">'+fmt(s.d)+'</span><span class="sub">'+(isPast?'прошла':'запланирована')+'</span></div>'+
+        (s.l?'<a class="s-link" href="'+esc(s.l)+'" target="_blank" rel="noopener">'+esc(s.l)+'</a>':'<div class="s-nolink">Ссылка на созвон не добавлена</div>')+(s.nt?'<p class="s-note"><span>Заметки:</span> '+esc(s.nt)+'</p>':'');
+      s.fb.forEach(function(f){
+        h+='<dl class="fb"><dt>'+esc(P(f.by).n)+(f.by===p.m?' (ментор)':' (менти)')+' — что обсудили</dt><dd>'+esc(f.a)+'</dd><dt>Следующий шаг</dt><dd>'+esc(f.n)+'</dd><dt>'+(f.by===p.m?'Оценка прогресса менти':'Самооценка прогресса')+'</dt><dd>'+dots(f.p)+' '+f.p+' из 5</dd></dl>';
+      });
+      if(p.st==='active'&&canEdit){
+        h+='<div class="s-actions"><button type="button" class="btn-ghost btn btn-sm" data-link="'+p.id+':'+idx+'">'+(s.l?'Ссылка и заметки':'Добавить ссылку и заметки')+'</button>';
+        if(isPast&&st.role==='user'&&!s.fb.some(function(f){return f.by===ME}))h+='<button type="button" class="btn btn-sm" data-fb="'+p.id+':'+idx+'">Оставить фидбек</button>';
+        h+='</div>';
+      }
+      h+='</div>';
+    });
+    h+='<p class="private">Заметки и фидбек этой пары видят только её участники и администратор.</p>';
+    if(st.role==='admin'&&p.st==='active')h+='<div style="margin-top:12px"><button type="button" class="btn btn-ghost btn-sm" data-finish="'+p.id+'">Завершить пару</button></div>';
+    return h+'</div>';
+  }
+
+  function renderPairs(){
+    var list=visiblePairs();
+    if(st.open&&!list.some(function(p){return p.id===st.open}))st.open=null;
+    var h='<div class="head"><div><h1>'+(st.role==='admin'?'Пары':'Мои пары')+'</h1><p class="sub">'+(st.role==='admin'?'Все пары программы и их статус':'Мария участвует и как менти, и как ментор')+'</p></div>'+
+      (st.role==='admin'?'<button type="button" class="btn" data-new-pair>Создать пару</button>':'')+'</div>';
+    h+='<div class="layout'+(st.open?' detail-open':'')+'"><div class="list">'+list.map(pairCard).join('')+'</div>';
+    h+='<div class="detail">'+(st.open?detail(pairById(st.open)):'<div class="panel empty">Выберите пару, чтобы увидеть сессии и фидбек.</div>')+'</div></div>';
+    return h;
+  }
+
+  function renderPeople(){
+    var busy={};pairs.forEach(function(p){if(p.st==='active'){busy[p.m]=1;busy[p.e]=1}});
+    return '<div class="head"><div><h1>Участники</h1><p class="sub">Анкеты всех участников. Любого можно назначить ментором или менти.</p></div></div><div class="people">'+
+      people.map(function(x){return '<div class="person"><div class="row"><b>'+esc(x.n)+'</b><span class="chip '+(busy[x.id]?'chip-active':'chip-done')+'">'+(busy[x.id]?'В паре':'Свободен')+'</span></div>'+
+        '<p><span>Цели:</span> '+esc(x.g)+'</p><p><span>Опыт:</span> '+esc(x.e)+'</p><p><span>Интересы:</span> '+esc(x.i)+'</p><p><span>Время:</span> '+esc(x.t)+'</p></div>'}).join('')+'</div>';
+  }
+
+  function renderProfile(){
+    var me=P(ME);
+    return '<div class="head"><div><h1>Моя анкета</h1><p class="sub">Одна анкета для обеих ролей — ментора и менти</p></div></div>'+
+      '<form class="form panel" id="profile">'+
+      '<label>Цели<textarea name="g" required>'+esc(me.g)+'</textarea></label>'+
+      '<label>Опыт<input name="e" required value="'+esc(me.e)+'"></label>'+
+      '<label>Интересы<input name="i" value="'+esc(me.i)+'"></label>'+
+      '<label>Доступное время<input name="t" value="'+esc(me.t)+'"></label>'+
+      '<div><button class="btn" type="submit">Сохранить анкету</button></div></form>';
+  }
+
+  function render(){
+    renderTop();
+    var h=st.tab==='people'?renderPeople():st.tab==='profile'?renderProfile():renderPairs();
+    $('main').innerHTML=h;
+  }
+
+  function openSheet(html){$('sheet').innerHTML=html;$('sheet').hidden=false;$('scrim').hidden=false;var f=$('sheet').querySelector('input,select,textarea');if(f)f.focus()}
+  function closeSheet(){$('sheet').hidden=true;$('scrim').hidden=true}
+  $('scrim').addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+
+  function opts(sel){return people.map(function(x){return '<option value="'+x.id+'"'+(x.id===sel?' selected':'')+'>'+esc(x.n)+'</option>'}).join('')}
+
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('button');if(!t)return;
+    if(t.dataset.role){st.role=t.dataset.role;st.tab='pairs';st.open=null;render();return}
+    if(t.dataset.tab){st.tab=t.dataset.tab;st.open=null;render();return}
+    if(t.dataset.pair){st.open=+t.dataset.pair;render();if(window.innerWidth<900)window.scrollTo(0,0);return}
+    if(t.hasAttribute('data-back')){st.open=null;render();return}
+    if(t.hasAttribute('data-close')){closeSheet();return}
+    if(t.hasAttribute('data-new-pair')){
+      openSheet('<h2>Новая пара</h2><form class="form" id="f-pair"><label>Ментор<select name="m">'+opts(5)+'</select></label><label>Менти<select name="e">'+opts(6)+'</select></label><p class="err" id="perr" hidden>Ментор и менти должны быть разными людьми</p><div class="s-actions"><button class="btn" type="submit">Создать пару</button><button class="btn btn-ghost" type="button" data-close>Отмена</button></div></form>');return}
+    if(t.dataset.addSession){
+      openSheet('<h2>Новая сессия</h2><form class="form" id="f-session" data-p="'+t.dataset.addSession+'"><label>Дата и время<input type="datetime-local" name="d" required value="2026-10-08T19:00"></label><label>Ссылка на созвон (Zoom, Meet и т. п.)<input type="url" name="l" placeholder="https://"></label><label>Заметки к встрече — видят только пара и администратор<textarea name="nt"></textarea></label><div class="s-actions"><button class="btn" type="submit">Сохранить</button><button class="btn btn-ghost" type="button" data-close>Отмена</button></div></form>');return}
+    if(t.dataset.link){
+      var a=t.dataset.link.split(':'),s=pairById(+a[0]).s[+a[1]];
+      openSheet('<h2>Ссылка и заметки</h2><form class="form" id="f-link" data-k="'+t.dataset.link+'"><label>Ссылка на созвон (Zoom, Meet и т. п.)<input type="url" name="l" placeholder="https://" value="'+esc(s.l)+'"></label><label>Заметки к встрече — видят только пара и администратор<textarea name="nt">'+esc(s.nt||'')+'</textarea></label><div class="s-actions"><button class="btn" type="submit">Сохранить</button><button class="btn btn-ghost" type="button" data-close>Отмена</button></div></form>');return}
+    if(t.dataset.fb){
+      openSheet('<h2>Фидбек после сессии</h2><form class="form" id="f-fb" data-k="'+t.dataset.fb+'"><label>Что обсудили<textarea name="a" required></textarea></label><label>Следующий шаг<input name="n" required></label><label>'+(pairById(+t.dataset.fb.split(':')[0]).m===ME?'Оценка прогресса менти':'Самооценка прогресса')+'<div class="scale" id="scale">'+[1,2,3,4,5].map(function(i){return '<button type="button" data-score="'+i+'" aria-pressed="'+(i===3)+'">'+i+'</button>'}).join('')+'</div></label><div class="s-actions"><button class="btn" type="submit">Отправить</button><button class="btn btn-ghost" type="button" data-close>Отмена</button></div></form>');return}
+    if(t.dataset.score){[].forEach.call(t.parentNode.children,function(b){b.setAttribute('aria-pressed',b===t?'true':'false')});return}
+    if(t.dataset.finish){pairById(+t.dataset.finish).st='done';render();toast('Пара отмечена как завершённая');return}
+  });
+
+  document.addEventListener('submit',function(e){
+    e.preventDefault();var f=e.target,fd=new FormData(f);
+    if(f.id==='f-pair'){
+      var m=+fd.get('m'),en=+fd.get('e');
+      if(m===en){$('perr').hidden=false;return}
+      var id=pairs.length?pairs[pairs.length-1].id+1:1;
+      pairs.unshift({id:id,m:m,e:en,st:'active',s:[]});st.open=id;closeSheet();render();toast('Пара создана');return}
+    if(f.id==='f-session'){
+      var p=pairById(+f.dataset.p);p.s.push({d:fd.get('d'),l:fd.get('l')||'',nt:fd.get('nt')||'',fb:[]});p.s.sort(function(x,y){return new Date(x.d)-new Date(y.d)});closeSheet();render();toast('Сессия добавлена');return}
+    if(f.id==='f-link'){
+      var k=f.dataset.k.split(':'),ss=pairById(+k[0]).s[+k[1]];ss.l=fd.get('l')||'';ss.nt=fd.get('nt')||'';closeSheet();render();toast('Сохранено');return}
+    if(f.id==='f-fb'){
+      var k2=f.dataset.k.split(':'),sc=f.querySelector('[data-score][aria-pressed="true"]');
+      pairById(+k2[0]).s[+k2[1]].fb.push({by:ME,a:fd.get('a'),n:fd.get('n'),p:sc?+sc.dataset.score:3});closeSheet();render();toast('Фидбек отправлен — его видят пара и администратор');return}
+    if(f.id==='profile'){
+      var me=P(ME);me.g=fd.get('g');me.e=fd.get('e');me.i=fd.get('i');me.t=fd.get('t');toast('Анкета сохранена');return}
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
