@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Грузия за 8 дней — мобильный макет</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--stone:#EEEDE8;--paper:#FFFFFF;--ink:#211E1C;--muted:#6B6560;--wine:#7A1F3D;--wine-d:#5E1530;--moss:#4E5B3A;--line:#DEDAD2;--gold:#C8A24A}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{font-family:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;background:#D8D5CE;color:var(--ink);font-size:16px;line-height:1.5}
+.app{max-width:430px;margin:0 auto;background:var(--stone);min-height:100vh;padding-bottom:88px;box-shadow:0 0 40px rgba(33,30,28,.18)}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;letter-spacing:-.01em}
+h1{font-size:40px;line-height:1.02}
+h2{font-size:32px;line-height:1.05;margin-bottom:14px}
+h3{font-size:26px;line-height:1.1;margin:4px 0 14px}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.note{background:var(--ink);color:#E8E2DA;font-size:12px;padding:8px 16px;text-align:center}
+.top{position:sticky;top:0;z-index:20;background:rgba(238,237,232,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar1{display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
+.brand{font-weight:600;font-size:15px}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.ask{font-size:14px;color:var(--wine);font-weight:600;text-decoration:none}
+.anchors{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto}
+.anchors a{flex:none;font-size:13px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.hero{position:relative;height:min(60vh,440px);background:radial-gradient(circle at 76% 26%,#FFF1D6 0 30px,rgba(255,236,200,.45) 31px 58px,transparent 59px),linear-gradient(#E58F6B,#F7D9B5);overflow:hidden;color:#fff}
+.hero::before,.hero::after,.photo::before,.photo::after{content:"";position:absolute;inset:0}
+.hero::before{background:#6B5566;clip-path:polygon(0 62%,14% 44%,27% 55%,46% 22%,63% 47%,79% 33%,100% 52%,100% 100%,0 100%)}
+.hero::after{background:#3A2A33;clip-path:polygon(0 80%,20% 66%,42% 78%,66% 60%,100% 74%,100% 100%,0 100%)}
+.hero-in{position:absolute;left:16px;right:16px;bottom:18px;z-index:1}
+.hero .kicker{font-size:13px;opacity:.9;margin-bottom:6px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.meta span{font-size:13px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 10px}
+section{padding:28px 16px 8px}
+.lead{color:var(--muted);margin:-6px 0 16px;font-size:15px}
+.tabs{position:relative;display:flex;gap:6px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 4px;scroll-snap-type:x proximity}
+.tab{flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:8px 12px;text-align:left;cursor:pointer;color:var(--ink);min-width:74px}
+.tab b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;line-height:1}
+.tab small{font-size:12px;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--wine);border-color:var(--wine);color:#fff}
+.tab[aria-selected="true"] small{color:#F1D9E0}
+.card{background:var(--paper);border-radius:22px;padding:12px 16px 16px}
+.photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 12px;padding:0 16px}
+.photo{flex:0 0 86%;aspect-ratio:4/3;border-radius:16px;position:relative;overflow:hidden;scroll-snap-align:center;background:radial-gradient(circle at 72% 30%,rgba(255,255,255,.85) 0 14px,rgba(255,255,255,.25) 15px 26px,transparent 27px),linear-gradient(var(--a),var(--b))}
+.photo::before{background:var(--c);clip-path:polygon(0 70%,18% 48%,34% 62%,55% 30%,72% 52%,86% 40%,100% 58%,100% 100%,0 100%)}
+.photo::after{background:var(--d);clip-path:polygon(0 88%,22% 72%,45% 84%,68% 66%,100% 80%,100% 100%,0 100%)}
+.photo span{position:absolute;left:10px;bottom:10px;z-index:1;color:#fff;font-size:12px;background:rgba(0,0,0,.3);padding:4px 9px;border-radius:999px}
+.route{font-size:13px;color:var(--moss);font-weight:600}
+.plan{list-style:none;display:grid;gap:10px;margin-bottom:14px}
+.plan li{display:grid;grid-template-columns:64px 1fr;gap:10px;font-size:15px}
+.plan i{font-style:normal;font-size:13px;color:var(--muted);padding-top:2px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.facts div{background:var(--stone);border-radius:12px;padding:8px 10px;font-size:13px}
+.daynav{display:flex;justify-content:space-between;gap:8px}
+.daynav button{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:10px;font-size:14px;cursor:pointer;color:var(--ink)}
+.daynav button:disabled{opacity:.35;cursor:default}
+.price{background:var(--paper);border-radius:22px;padding:18px 16px}
+.sum{font-family:"Cormorant Garamond",Georgia,serif;font-size:44px;font-weight:700;line-height:1}
+.sum-note{color:var(--muted);font-size:14px;margin:4px 0 2px}
+.dates{display:grid;gap:6px;margin:16px 0}
+.dates label{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;cursor:pointer}
+.dates input{accent-color:var(--wine);margin-right:8px}
+.dates small{color:var(--muted);font-size:12px;white-space:nowrap}
+.dates .few{color:var(--wine);font-weight:600}
+.lists h4{font-size:15px;margin:14px 0 8px}
+.lists ul{list-style:none;display:grid;gap:6px;font-size:15px}
+.lists li{padding-left:24px;position:relative}
+.lists .inc li::before{content:"✓";position:absolute;left:0;color:var(--moss);font-weight:700}
+.lists .ext li::before{content:"+";position:absolute;left:2px;color:var(--wine);font-weight:700}
+details{background:var(--paper);border-radius:16px;padding:14px 16px;margin-top:10px}
+summary{font-weight:600;cursor:pointer}
+details p{font-size:15px;color:var(--muted);margin-top:8px}
+.btns{display:grid;gap:8px;margin-top:16px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:14px;font-weight:600;font-size:16px;text-decoration:none;border:0;cursor:pointer}
+.btn-main{background:var(--wine);color:#fff}
+.btn-main:hover{background:var(--wine-d)}
+.btn-ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.soon{margin:18px 16px 0;border:1.5px dashed #C9C3B8;border-radius:16px;padding:14px;color:var(--muted);font-size:14px}
+.sticky{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);z-index:30;display:flex;align-items:center;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+.sticky div{flex:1;font-size:13px;color:var(--muted);line-height:1.2}
+.sticky b{display:block;color:var(--ink);font-size:17px}
+.sticky .btn{flex:1.3;min-height:46px}
+.scrim{position:fixed;inset:0;background:rgba(33,30,28,.45);z-index:40}
+.sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,430px);z-index:50;background:var(--paper);border-radius:22px 22px 0 0;padding:10px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.sheet[hidden],.scrim[hidden],.sheet [hidden]{display:none}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
+.sheet form{display:grid;gap:8px}
+.sheet input,.sheet select{min-height:48px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.cnt{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.cnt select{min-height:40px}
+.sheet small{color:var(--muted);font-size:12px}
+.sheet-date{color:var(--muted);font-size:14px;margin:-8px 0 12px}
+.close{margin-top:10px;width:100%;background:none;border:0;color:var(--muted);font-size:14px;padding:8px;cursor:pointer}
+.done{background:var(--stone);border-radius:14px;padding:14px}
+.done p{font-size:15px;color:var(--muted);margin-top:4px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.hl{padding:18px 16px 0}
+.hl h2{font-size:26px;margin-bottom:12px}
+.hl-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hl-c{background:var(--paper);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 6px 16px rgba(33,30,28,.05)}
+.hl-c i{width:38px;height:38px;border-radius:12px;background:#F5E6EB;display:grid;place-items:center;flex:none}
+.hl-c b{display:block;font-size:14px;line-height:1.2}
+.hl-c span{font-size:12px;color:var(--muted);line-height:1.3}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+  <div class="bar1"><div class="brand">Авторский тур<small>Грузия, 8 дней</small></div><a class="ask" href="#" data-open="ask">Задать вопрос</a></div>
+  <nav class="anchors" aria-label="Разделы"><a href="#program">Программа</a><a href="#stay">Проживание</a><a href="#price">Стоимость</a><a href="#booking">Бронирование</a><a href="#reviews">Отзывы</a></nav>
+</div>
+<header class="hero">
+  <div class="hero-in">
+    <p class="kicker">Авторский тур в маленькой группе</p>
+    <h1>Грузия за 8 дней: от Тбилиси до Казбека</h1>
+    <div class="meta"><span>8 дней, 7 ночей</span><span>до 10 человек</span><span>октябрь–ноябрь</span><span>от 95 000 ₽</span></div>
+  </div>
+</header>
+
+<section class="hl"><h2>Что вас ждёт</h2><div class="hl-row">
+<div class="hl-c"><i><svg width="20" height="20" viewBox="0 0 20 20"><path d="M1 17l6-10 3 5 2-3 7 8z" fill="#7A1F3D"/><path d="M7 7l1.6 2.7L7 9l-1.4 1z" fill="#fff"/></svg></i><div><b>Горы Кавказа</b><span>Казбек и перевалы</span></div></div>
+<div class="hl-c"><i><svg width="20" height="20" viewBox="0 0 20 20"><path d="M6 2h8c0 5-1.5 8-4 8S6 7 6 2z" fill="#7A1F3D"/><path d="M10 10v6M7 18h6" stroke="#7A1F3D" stroke-width="1.8" stroke-linecap="round"/></svg></i><div><b>Вино Кахетии</b><span>Семейный марани</span></div></div>
+<div class="hl-c"><i><svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="11" rx="8.5" ry="5.5" fill="#7A1F3D"/><ellipse cx="10" cy="10.5" rx="4" ry="2.4" fill="#F7C948"/><circle cx="10" cy="10.3" r="1.3" fill="#F59E0B"/></svg></i><div><b>Грузинская кухня</b><span>Хачапури и хинкали</span></div></div>
+<div class="hl-c"><i><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 1v3M8.5 2.5h3" stroke="#7A1F3D" stroke-width="1.5" stroke-linecap="round"/><path d="M5 9c0-3 2.2-5 5-5s5 2 5 5z" fill="#7A1F3D"/><rect x="4" y="9" width="12" height="9" rx="1" fill="#7A1F3D"/><rect x="8.5" y="12" width="3" height="6" rx="1.5" fill="#fff"/></svg></i><div><b>Древние храмы</b><span>Джвари и Гергети</span></div></div>
+</div></section>
+<section id="program">
+  <h2>Программа по дням</h2>
+  <p class="lead">Выберите день, чтобы посмотреть маршрут и план.</p>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <article class="card" id="card" role="tabpanel" aria-live="polite"></article>
+</section>
+
+<div class="soon" id="stay">Проживание: отели и гестхаусы по дням — соберу после согласования макета.</div>
+
+<section id="price">
+  <h2>Стоимость</h2>
+  <div class="price">
+    <div class="sum">95 000 ₽</div>
+    <p class="sum-note">за человека в двухместном номере</p>
+    <p class="sum-note">Одноместное размещение: +18 000 ₽</p>
+    <div class="dates" role="radiogroup" aria-label="Даты тура">
+      <label><span><input type="radio" name="d" checked>12–19 октября</span><small class="few">осталось 3 места</small></label>
+      <label><span><input type="radio" name="d">26 октября – 2 ноября</span><small>7 мест</small></label>
+      <label><span><input type="radio" name="d">9–16 ноября</span><small>идёт набор</small></label>
+    </div>
+    <div class="lists">
+      <h4>Входит в стоимость</h4>
+      <ul class="inc">
+        <li>Проживание 7 ночей в отелях и гестхаусах</li>
+        <li>Завтраки каждый день и 4 ужина</li>
+        <li>Все переезды по программе</li>
+        <li>Встреча и проводы в аэропорту</li>
+        <li>Сопровождение автора тура</li>
+        <li>Входные билеты по программе</li>
+        <li>Дегустация вина в Кахетии</li>
+      </ul>
+      <h4>Оплачивается отдельно</h4>
+      <ul class="ext">
+        <li>Авиабилеты</li>
+        <li>Обеды и 3 ужина, около 2 000 ₽ в день</li>
+        <li>Медицинская страховка</li>
+        <li>Личные расходы и сувениры</li>
+      </ul>
+    </div>
+    <div class="btns">
+      <button class="btn btn-main" type="button" data-open="book">Забронировать</button>
+      <button class="btn btn-ghost" type="button" data-open="ask">Задать вопрос</button>
+    </div>
+  </div>
+  <details id="booking"><summary>Условия бронирования</summary><p>Предоплата 30% закрепляет место. Остаток — за 14 дней до начала тура. При отмене позже этого срока предоплата не возвращается, но её можно перенести на другие даты.</p></details>
+  <details><summary>Что взять с собой</summary><p>Удобную обувь для прогулок, тёплую куртку для гор и загранпаспорт.</p></details>
+</section>
+
+<div class="soon" id="reviews">Отзывы и ссылки на страницы компании — соберу после согласования макета.</div>
+
+<div class="sticky"><div><b>95 000 ₽</b><span id="sdate">12–19 октября</span></div><button class="btn btn-main" type="button" data-open="book">Забронировать</button></div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet-book" role="dialog" aria-modal="true" aria-labelledby="bt" hidden>
+  <div class="grab"></div><h3 id="bt">Заявка на тур</h3><p class="sheet-date">Даты: <b id="bdate"></b></p>
+  <form id="bform"><input placeholder="Ваше имя" autocomplete="name" required><input type="tel" placeholder="Телефон или Telegram" required><label class="cnt">Сколько человек <select><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label><button class="btn btn-main" type="submit">Отправить заявку</button><small>Мы свяжемся с вами, чтобы подтвердить места и рассказать про оплату.</small></form>
+  <div class="done" hidden><b>Заявка отправлена</b><p>Мы свяжемся с вами, чтобы подтвердить места.</p></div>
+  <button class="close" type="button" data-close>Закрыть</button>
+</div>
+<div class="sheet" id="sheet-ask" role="dialog" aria-modal="true" aria-labelledby="at" hidden>
+  <div class="grab"></div><h3 id="at">Задать вопрос</h3><p class="sheet-date">Ответим в мессенджере или перезвоним</p>
+  <div class="btns"><a class="btn btn-ghost" href="#">Написать в Telegram</a><a class="btn btn-ghost" href="#">Позвонить</a></div>
+  <button class="close" type="button" data-close>Закрыть</button>
+</div>
+<script>
+(function(){
+  var short=['Тбилиси','Мцхета','Казбеги','Трусо','Сигнахи','Телави','Боржоми','Вылет'];
+  var sky=[['#F2B880','#F7DDB8','#8A6E7A','#4A3A45'],['#A9C7DE','#E4EEF3','#7C8C74','#4E5B3A'],['#8FB3D9','#DDE9F2','#9AA3AE','#3F4A55'],['#9CC3D5','#E6F0F2','#7F9A7A','#43543F'],['#E7B98A','#F4E3C8','#8C6A5A','#5E1530'],['#C9D7B4','#EEF1E2','#86955F','#4E5B3A'],['#B8C9C2','#E9EFEA','#6F8B7C','#3D5147'],['#D9B7C4','#F2E4E8','#8A7A8F','#4A3A45']];
+  var days=[
+   {t:'Тбилиси: первое знакомство',r:'Аэропорт — Старый город',ph:['Старый Тбилиси','Нарикала','Серные бани'],p:[['День','Встреча в аэропорту, трансфер в отель, отдых после перелёта'],['Вечер','Прогулка по Старому городу, канатная дорога к крепости Нарикала, ужин-знакомство']],f:['В пути ~30 мин','Пешком ~4 км','Ночь: Тбилиси','Питание: ужин']},
+   {t:'Мцхета и Джвари',r:'Тбилиси — Мцхета — Тбилиси',ph:['Джвари','Светицховели','Мцхета'],p:[['Утро','Монастырь Джвари над слиянием Арагви и Куры'],['День','Собор Светицховели и улочки Мцхеты'],['Вечер','Свободное время в Тбилиси']],f:['В пути ~1 ч','Пешком ~5 км','Ночь: Тбилиси','Питание: завтрак']},
+   {t:'Военно-Грузинская дорога',r:'Тбилиси — Ананури — Гудаури — Степанцминда',ph:['Ананури','Перевал у Гудаури','Гергети'],p:[['Утро','Выезд из Тбилиси, остановка у крепости Ананури над Жинвальским водохранилищем'],['День','Смотровая площадка на перевале у Гудаури, спуск в Степанцминду'],['Вечер','Подъём к церкви Гергети на фоне Казбека, ужин с видом на горы']],f:['В пути ~4 ч','Пешком ~3 км','Ночь: Степанцминда','Питание: завтрак, ужин']},
+   {t:'Утро в горах',r:'Степанцминда — долина Трусо — Тбилиси',ph:['Долина Трусо','Казбек','Дорога назад'],p:[['Утро','Прогулка по долине Трусо'],['День','Обед в горах и возвращение в Тбилиси'],['Вечер','Свободный вечер']],f:['В пути ~4 ч','Пешком ~7 км','Ночь: Тбилиси','Питание: завтрак, обед']},
+   {t:'Кахетия: вино и Сигнахи',r:'Тбилиси — Бодбе — Сигнахи',ph:['Сигнахи','Бодбе','Виноградники'],p:[['Утро','Переезд в Кахетию, монастырь Бодбе'],['День','Прогулка по крепостным стенам Сигнахи'],['Вечер','Семейный марани']],f:['В пути ~2 ч','Пешком ~4 км','Ночь: Сигнахи','Питание: завтрак, ужин']},
+   {t:'Телави и Алаверди',r:'Сигнахи — Телави — Тбилиси',ph:['Алаверди','Телави','Цинандали'],p:[['Утро','Собор Алаверди'],['День','Телави и усадьба Цинандали'],['Вечер','Возвращение в Тбилиси']],f:['В пути ~3 ч','Пешком ~3 км','Ночь: Тбилиси','Питание: завтрак']},
+   {t:'Уплисцихе и Боржоми',r:'Тбилиси — Уплисцихе — Боржоми',ph:['Уплисцихе','Боржоми','Парк источников'],p:[['Утро','Пещерный город Уплисцихе'],['День','Переезд в Боржоми, парк и минеральные источники'],['Вечер','Ужин в Боржоми']],f:['В пути ~3 ч','Пешком ~5 км','Ночь: Боржоми','Питание: завтрак, ужин']},
+   {t:'Возвращение',r:'Боржоми — Тбилиси — аэропорт',ph:['Тбилиси','Сувениры','Аэропорт'],p:[['День','Переезд в Тбилиси, время на сувениры'],['Вечер','Трансфер в аэропорт']],f:['В пути ~3 ч','Пешком ~2 км','Ночь: —','Питание: завтрак']}
+  ];
+  var tabs=document.getElementById('tabs'), card=document.getElementById('card'), cur=2;
+  days.forEach(function(d,i){
+    var b=document.createElement('button');b.className='tab';b.setAttribute('role','tab');
+    b.innerHTML='<b>'+(i+1)+'</b><small>'+short[i]+'</small>';
+    b.addEventListener('click',function(){show(i)});tabs.appendChild(b);
+  });
+  function show(i){
+    cur=i;var d=days[i],c=sky[i];
+    [].forEach.call(tabs.children,function(t,k){t.setAttribute('aria-selected',k===i?'true':'false')});
+    var ch=tabs.children[i];tabs.scrollLeft=ch.offsetLeft-(tabs.clientWidth-ch.offsetWidth)/2;
+    var h='<div class="photos">';
+    d.ph.forEach(function(p){h+='<div class="photo" style="--a:'+c[0]+';--b:'+c[1]+';--c:'+c[2]+';--d:'+c[3]+'"><span>Фото: '+p+'</span></div>'});
+    h+='</div><p class="route">'+d.r+'</p><h3>День '+(i+1)+'. '+d.t+'</h3><ol class="plan">';
+    d.p.forEach(function(x){h+='<li><i>'+x[0]+'</i><span>'+x[1]+'</span></li>'});
+    h+='</ol><div class="facts">';
+    d.f.forEach(function(x){h+='<div>'+x+'</div>'});
+    h+='</div><div class="daynav"><button type="button" id="prev">Предыдущий день</button><button type="button" id="next">Следующий день</button></div>';
+    card.innerHTML=h;
+    var pv=document.getElementById('prev'),nx=document.getElementById('next');
+    pv.disabled=i===0;nx.disabled=i===days.length-1;
+    pv.onclick=function(){show(cur-1)};nx.onclick=function(){show(cur+1)};
+  }
+  function dateText(){var r=document.querySelector('input[name=d]:checked');return r?r.parentNode.textContent.trim():'';}
+  var scrim=document.getElementById('scrim');
+  function openSheet(id){if(id==='book'){document.getElementById('bdate').textContent=dateText();}scrim.hidden=false;document.getElementById('sheet-'+id).hidden=false;}
+  function closeAll(){scrim.hidden=true;[].forEach.call(document.querySelectorAll('.sheet'),function(x){x.hidden=true});}
+  [].forEach.call(document.querySelectorAll('[data-open]'),function(b){b.addEventListener('click',function(e){e.preventDefault();openSheet(b.getAttribute('data-open'))})});
+  [].forEach.call(document.querySelectorAll('[data-close]'),function(b){b.addEventListener('click',closeAll)});
+  scrim.addEventListener('click',closeAll);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAll()});
+  [].forEach.call(document.querySelectorAll('input[name=d]'),function(r){r.addEventListener('change',function(){document.getElementById('sdate').textContent=dateText()})});
+  document.getElementById('bform').addEventListener('submit',function(e){e.preventDefault();this.hidden=true;this.nextElementSibling.hidden=false;});
+  show(cur);
+})();
+</script>
+</body>
+</html>
